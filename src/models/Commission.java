@@ -12,7 +12,7 @@ import controllers.Salaries;
  *
  * @author pc-user
  */
-public class Commission extends Employees implements Salaries,Commissions{
+public class Commission extends Employees implements Salaries, Commissions {
 
     private int salesDone;
 
@@ -23,21 +23,16 @@ public class Commission extends Employees implements Salaries,Commissions{
         this.salesDone = salesDone;
     }
 
-    /**
-     * With Middle Name*
-     */
     public Commission(int salesDone, int id, String firstName, String middleName, String lastName, String gender, String job, String jobType, Double salary) {
         super(id, firstName, middleName, lastName, gender, job, jobType, salary);
         this.salesDone = salesDone;
     }
 
     /**
-     * Without Middle Name*
+     * With Middle Name*
      */
-    public Commission(int salesDone, int id, String firstName, String lastName, String gender, String job, String jobType, Double salary) {
-        super(id, firstName, lastName, gender, job, jobType, salary);
-        this.salesDone = salesDone;
-    }
+   
+
 
     public int getSalesDone() {
         return salesDone;
@@ -51,19 +46,18 @@ public class Commission extends Employees implements Salaries,Commissions{
         return commissionRate;
     }
 
-    
     @Override
     public double computeMySalary() {
         double salary;
-        
-        if(salesDone <= 0){
+
+        if (salesDone <= 0) {
             setSalesDone(NONE);
         }
-        
+
         salary = salesDone * computeCommissionPercentage();
-        
+
         setSalary(salary);
-        
+
         return salary;
     }
 

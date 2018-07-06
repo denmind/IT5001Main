@@ -31,11 +31,10 @@ public class Hourly extends Employees implements Salaries {
         super(id, firstName, middleName, lastName, gender, job, jobType, salary);
     }
 
-    /**
-     * Without Middle Name*
-     */
-    public Hourly(int id, String firstName, String lastName, String gender, String job, String jobType, Double salary) {
-        super(id, firstName, lastName, gender, job, jobType, salary);
+    public Hourly(double hoursWorked, double ratePerHour, int id, String firstName, String middleName, String lastName, String gender, String job, String jobType, Double salary) {
+        super(id, firstName, middleName, lastName, gender, job, jobType, salary);
+        this.hoursWorked = hoursWorked;
+        this.ratePerHour = ratePerHour;
     }
 
     public double getHoursWorked() {
@@ -57,7 +56,7 @@ public class Hourly extends Employees implements Salaries {
     @Override
     public double computeMySalary() {
         double salary;
-        
+
         if (hoursWorked <= 0) {
             setHoursWorked(NONE);
         }
@@ -65,10 +64,10 @@ public class Hourly extends Employees implements Salaries {
             setRatePerHour(minimumRate);
         }
 
-        salary = getHoursWorked()* getRatePerHour();
-        
+        salary = getHoursWorked() * getRatePerHour();
+
         setSalary(salary);
-        
+
         return salary;
     }
 

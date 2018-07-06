@@ -37,19 +37,6 @@ public class Employees {
         this.salary = salary;
     }
 
-    /**
-     * Without Middle Name*
-     */
-    public Employees(int id, String firstName, String lastName, String gender, String job, String jobType, Double salary) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.job = job;
-        this.jobType = jobType;
-        this.salary = salary;
-    }
-
     public int deleteEmployees(int id) {
         this.id = id;
         return id;

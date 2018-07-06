@@ -48,10 +48,18 @@ public class EmployeeLogin extends javax.swing.JPanel {
         welcomeLabel.setText("WELCOME!");
         add(welcomeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 210, 50));
 
+        usernameLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         usernameLabel.setText("Username:");
         add(usernameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
+
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameFieldActionPerformed(evt);
+            }
+        });
         add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 140, -1));
 
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         passwordLabel.setText("Password:");
         add(passwordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
@@ -83,7 +91,7 @@ public class EmployeeLogin extends javax.swing.JPanel {
             EmployeeMainMenu emm=new EmployeeMainMenu();
             JFrame jf = new JFrame("Employee Main Menu");
             jf.add(emm);
-            jf.setSize(750, 350);
+            jf.setSize(664, 140);
             jf.setResizable(false);
             jf.setVisible(true);
         } else {
@@ -97,6 +105,10 @@ public class EmployeeLogin extends javax.swing.JPanel {
             loginButtonActionPerformed(null);
         }
     }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -18,6 +18,10 @@ public class BasePlusCommission extends Commission {
     public BasePlusCommission() {
     }
 
+    public BasePlusCommission(int salesDone, int id, String firstName, String middleName, String lastName, String gender, String job, String jobType, Double salary) {
+        super(salesDone, id, firstName, middleName, lastName, gender, job, jobType, salary);
+    }
+
     public BasePlusCommission(double baseSalary) {
         this.baseSalary = baseSalary;
     }
@@ -29,11 +33,6 @@ public class BasePlusCommission extends Commission {
 
     public BasePlusCommission(double baseSalary, int salesDone, int id, String firstName, String middleName, String lastName, String gender, String job, String jobType, Double salary) {
         super(salesDone, id, firstName, middleName, lastName, gender, job, jobType, salary);
-        this.baseSalary = baseSalary;
-    }
-
-    public BasePlusCommission(double baseSalary, int salesDone, int id, String firstName, String lastName, String gender, String job, String jobType, Double salary) {
-        super(salesDone, id, firstName, lastName, gender, job, jobType, salary);
         this.baseSalary = baseSalary;
     }
 

@@ -11,7 +11,11 @@ import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import models.BasePlusCommission;
+import models.Commission;
 import models.Employees;
+import models.Hourly;
+import models.PieceWorker;
 
 /**
  *
@@ -24,7 +28,7 @@ public class EditEmployee extends javax.swing.JPanel {
      */
     public EditEmployee() {
         initComponents();
-        
+
         firstNameField.setVisible(false);
         firstNameLabel.setVisible(false);
 
@@ -47,10 +51,10 @@ public class EditEmployee extends javax.swing.JPanel {
         employeeType.setVisible(false);
         typeLabel.setVisible(false);
 
-        baseSalaryField.setVisible(false);
+        txtFieldBottom.setVisible(false);
         baseSalaryLabel.setVisible(false);
 
-        totalSalesField.setVisible(false);
+        txtFieldTop.setVisible(false);
         totalSalesLabel.setVisible(false);
 
         totalHoursWorkedField.setVisible(false);
@@ -67,7 +71,6 @@ public class EditEmployee extends javax.swing.JPanel {
 
         updateButton.setVisible(false);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,11 +97,11 @@ public class EditEmployee extends javax.swing.JPanel {
         updateButton = new javax.swing.JButton();
         femaleRadio = new javax.swing.JRadioButton();
         maleRadio = new javax.swing.JRadioButton();
-        employeeType = new javax.swing.JComboBox<>();
-        baseSalaryField = new javax.swing.JTextField();
+        employeeType = new javax.swing.JComboBox<String>();
+        txtFieldBottom = new javax.swing.JTextField();
         baseSalaryLabel = new javax.swing.JLabel();
         totalSalesLabel = new javax.swing.JLabel();
-        totalSalesField = new javax.swing.JTextField();
+        txtFieldTop = new javax.swing.JTextField();
         totalHoursWorkedField = new javax.swing.JTextField();
         totalHoursWorkedLabel = new javax.swing.JLabel();
         ratePerHourLabel = new javax.swing.JLabel();
@@ -166,7 +169,7 @@ public class EditEmployee extends javax.swing.JPanel {
         });
         add(maleRadio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, -1, -1));
 
-        employeeType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Type", "Base Plus Commission Employee", "Commission Employee", "Hourly Employee", "Piece Worker Employee" }));
+        employeeType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Type", "Base Plus Commission Employee", "Commission Employee", "Hourly Employee", "Piece Worker Employee" }));
         employeeType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeTypeActionPerformed(evt);
@@ -174,19 +177,19 @@ public class EditEmployee extends javax.swing.JPanel {
         });
         add(employeeType, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 160, -1));
 
-        baseSalaryField.addActionListener(new java.awt.event.ActionListener() {
+        txtFieldBottom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                baseSalaryFieldActionPerformed(evt);
+                txtFieldBottomActionPerformed(evt);
             }
         });
-        add(baseSalaryField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 440, 160, -1));
+        add(txtFieldBottom, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 440, 160, -1));
 
         baseSalaryLabel.setText("Base Salary:");
         add(baseSalaryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, -1));
 
         totalSalesLabel.setText("Total Sales:");
         add(totalSalesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, -1, -1));
-        add(totalSalesField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 160, -1));
+        add(txtFieldTop, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 160, -1));
         add(totalHoursWorkedField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 440, 160, -1));
 
         totalHoursWorkedLabel.setText("Total Hours Worked:");
@@ -234,33 +237,79 @@ public class EditEmployee extends javax.swing.JPanel {
         int rc = JOptionPane.showConfirmDialog(null, "Procced?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         //CODE TO UPDATE
-        maleRadio.setActionCommand("Male");
-        femaleRadio.setActionCommand("Female");
-        String gender = genderButtonGroup.getSelection().getActionCommand();
+        try {
+            maleRadio.setActionCommand("Male");
+            femaleRadio.setActionCommand("Female");
+            String gender = genderButtonGroup.getSelection().getActionCommand();
 
-        int id = Integer.parseInt(idField.getText());
-        String firstName = firstNameField.getText();
-        String middleName = middleNameField.getText();
-        String lastName = lastNameField.getText();
-        String job = jobField.getText();
-        String jobType = (String) employeeType.getSelectedItem();
-        Double salary = Double.parseDouble(baseSalaryField.getText());
+            int id = Integer.parseInt(idField.getText());
+            String firstName = firstNameField.getText();
+            String middleName = middleNameField.getText();
+            String lastName = lastNameField.getText();
+            String job = jobField.getText();
+            String jobType = (String) employeeType.getSelectedItem();
+            Double salary = 0.0;
 
-        Employees emp = new Employees(id, firstName, middleName, lastName, gender, job, jobType, salary);
-        EmployeeController empC = new EmployeeController();
+            double X = 0;
+            double Y = 0;
 
-        if (empC.updateEmployee(emp) == 1 && rc == 0) {
-            int rep = JOptionPane.showConfirmDialog(null, "UPDATE SUCCESS!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            if (rep == 0) {
-                Component comp = SwingUtilities.getRoot(this);
-                ((Window) comp).dispose();
-                EmployeeTableList etl = new EmployeeTableList();
-                JFrame jf = new JFrame("Employee Management");
-                jf.add(etl);
-                jf.setSize(600, 550);
-                jf.setResizable(false);
-                jf.setVisible(true);
+            Employees emp = new Employees();
+
+            switch (jobType) {
+                case "Base Plus Commission Employee":
+                    System.out.println(txtFieldBottom.getText());
+                    System.out.println(txtFieldTop.getText());
+                    X = Double.parseDouble(txtFieldTop.getText());
+                    Y = Double.parseDouble(txtFieldBottom.getText());
+                    BasePlusCommission B = new BasePlusCommission(Y, (int) X, id, firstName, middleName, lastName, gender, job, jobType, salary);
+                    B.setSalary(B.computeMySalary());
+                    emp = B;
+                    break;
+                case "Commission Employee":
+                    System.out.println(txtFieldTop.getText());
+                    X = Double.parseDouble(txtFieldTop.getText());
+                    Commission C = new Commission((int) X, id, firstName, middleName, lastName, gender, job, jobType, salary);
+                    C.setSalary(C.computeMySalary());
+                    emp = C;
+                    break;
+                case "Hourly Employee":
+                    Y = Double.parseDouble(totalHoursWorkedField.getText());
+                    X = Double.parseDouble(ratePerHourField.getText());
+                    System.out.println(X);
+                    System.out.println(Y);
+                    Hourly H = new Hourly(Y, X, id, firstName, middleName, lastName, gender, job, jobType, salary);
+                    H.setSalary(H.computeMySalary());
+                    emp = H;
+                    break;
+                case "Piece Worker Employee":
+                    Y = Double.parseDouble(totalPiecesFinishedField.getText());
+                    X = Double.parseDouble(ratePerPieceField.getText());
+                    System.out.println(X);
+                    System.out.println(Y);
+                    PieceWorker P = new PieceWorker((int) Y, X, id, firstName, middleName, lastName, gender, job, jobType, salary);
+                    P.setSalary(P.computeMySalary());
+                    emp = P;
+                    break;
+
             }
+
+            EmployeeController empC = new EmployeeController();
+
+            if (EmployeeController.updateEmployee(emp) == 1 && rc == 0) {
+                int rep = JOptionPane.showConfirmDialog(null, "UPDATE SUCCESS!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if (rep == 0) {
+                    Component comp = SwingUtilities.getRoot(this);
+                    ((Window) comp).dispose();
+                    EmployeeTableList etl = new EmployeeTableList();
+                    JFrame jf = new JFrame("Employee Management");
+                    jf.add(etl);
+                    jf.setSize(600, 550);
+                    jf.setResizable(false);
+                    jf.setVisible(true);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_updateButtonActionPerformed
 
@@ -272,10 +321,10 @@ public class EditEmployee extends javax.swing.JPanel {
         // TODO add your handling code here:
         String chosenEmployeeType = (String) employeeType.getSelectedItem();
         if (chosenEmployeeType.equals("Choose Type")) {
-            baseSalaryField.setVisible(false);
+            txtFieldBottom.setVisible(false);
             baseSalaryLabel.setVisible(false);
 
-            totalSalesField.setVisible(false);
+            txtFieldTop.setVisible(false);
             totalSalesLabel.setVisible(false);
 
             totalHoursWorkedField.setVisible(false);
@@ -291,10 +340,10 @@ public class EditEmployee extends javax.swing.JPanel {
             totalPiecesFinishedLabel.setVisible(false);
 
         } else if (chosenEmployeeType.equals("Base Plus Commission Employee")) {
-            baseSalaryField.setVisible(true);
+            txtFieldBottom.setVisible(true);
             baseSalaryLabel.setVisible(true);
 
-            totalSalesField.setVisible(true);
+            txtFieldTop.setVisible(true);
             totalSalesLabel.setVisible(true);
 
             totalHoursWorkedField.setVisible(false);
@@ -310,10 +359,10 @@ public class EditEmployee extends javax.swing.JPanel {
             totalPiecesFinishedLabel.setVisible(false);
 
         } else if (chosenEmployeeType.equals("Commission Employee")) {
-            baseSalaryField.setVisible(false);
+            txtFieldBottom.setVisible(false);
             baseSalaryLabel.setVisible(false);
 
-            totalSalesField.setVisible(true);
+            txtFieldTop.setVisible(true);
             totalSalesLabel.setVisible(true);
 
             totalHoursWorkedField.setVisible(false);
@@ -329,10 +378,10 @@ public class EditEmployee extends javax.swing.JPanel {
             totalPiecesFinishedLabel.setVisible(false);
 
         } else if (chosenEmployeeType.equals("Hourly Employee")) {
-            baseSalaryField.setVisible(false);
+            txtFieldBottom.setVisible(false);
             baseSalaryLabel.setVisible(false);
 
-            totalSalesField.setVisible(false);
+            txtFieldTop.setVisible(false);
             totalSalesLabel.setVisible(false);
 
             totalHoursWorkedField.setVisible(true);
@@ -348,10 +397,10 @@ public class EditEmployee extends javax.swing.JPanel {
             totalPiecesFinishedLabel.setVisible(false);
 
         } else if (chosenEmployeeType.equals("Piece Worker Employee")) {
-            baseSalaryField.setVisible(false);
+            txtFieldBottom.setVisible(false);
             baseSalaryLabel.setVisible(false);
 
-            totalSalesField.setVisible(false);
+            txtFieldTop.setVisible(false);
             totalSalesLabel.setVisible(false);
 
             totalHoursWorkedField.setVisible(false);
@@ -369,9 +418,9 @@ public class EditEmployee extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_employeeTypeActionPerformed
 
-    private void baseSalaryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseSalaryFieldActionPerformed
+    private void txtFieldBottomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldBottomActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_baseSalaryFieldActionPerformed
+    }//GEN-LAST:event_txtFieldBottomActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         // TODO add your handling code here:
@@ -453,7 +502,6 @@ public class EditEmployee extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JTextField baseSalaryField;
     private javax.swing.JLabel baseSalaryLabel;
     private javax.swing.JButton confirmButton;
     private javax.swing.JComboBox<String> employeeType;
@@ -480,8 +528,9 @@ public class EditEmployee extends javax.swing.JPanel {
     private javax.swing.JLabel totalHoursWorkedLabel;
     private javax.swing.JTextField totalPiecesFinishedField;
     private javax.swing.JLabel totalPiecesFinishedLabel;
-    private javax.swing.JTextField totalSalesField;
     private javax.swing.JLabel totalSalesLabel;
+    private javax.swing.JTextField txtFieldBottom;
+    private javax.swing.JTextField txtFieldTop;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables

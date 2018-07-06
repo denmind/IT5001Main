@@ -7,7 +7,6 @@
 package models;
 
 import controllers.Salaries;
-import javafx.scene.input.KeyCode;
 
 /**
  *
@@ -28,11 +27,10 @@ public class PieceWorker extends Employees implements Salaries {
         super(id, firstName, middleName, lastName, gender, job, jobType, salary);
     }
 
-    /**
-     * Without Middle Name*
-     */
-    public PieceWorker(int id, String firstName, String lastName, String gender, String job, String jobType, Double salary) {
-        super(id, firstName, lastName, gender, job, jobType, salary);
+    public PieceWorker(int piecesDone, double pieceRate, int id, String firstName, String middleName, String lastName, String gender, String job, String jobType, Double salary) {
+        super(id, firstName, middleName, lastName, gender, job, jobType, salary);
+        this.piecesDone = piecesDone;
+        this.pieceRate = pieceRate;
     }
 
     public PieceWorker(int piecesDone, double pieceRate) {
@@ -60,7 +58,7 @@ public class PieceWorker extends Employees implements Salaries {
     @Override
     public double computeMySalary() {
         double salary;
-        
+
         if (pieceRate <= 0) {
             setPieceRate(minimumRate);
         }
@@ -69,9 +67,9 @@ public class PieceWorker extends Employees implements Salaries {
         }
 
         salary = getPieceRate() * getPiecesDone();
-        
+
         setSalary(salary);
-        
+
         return salary;
     }
 

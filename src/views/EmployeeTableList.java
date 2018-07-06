@@ -52,6 +52,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        addNewEmployeeButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addNewEmployeeButton.setText("Add New Employee");
         addNewEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +81,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, 321));
 
+        updateEmployeeButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         updateEmployeeButton.setText("Update Employee");
         updateEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +90,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
         });
         add(updateEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 140, 40));
 
+        deleteEmployeeButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         deleteEmployeeButton.setText("Delete Employee");
         deleteEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,7 +105,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
                 employeeMainMenuButtonActionPerformed(evt);
             }
         });
-        add(employeeMainMenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        add(employeeMainMenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewEmployeeButtonActionPerformed
@@ -146,7 +149,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
         EmployeeMainMenu emm = new EmployeeMainMenu();
         JFrame jf = new JFrame("Employee Main Menu");
         jf.add(emm);
-        jf.setSize(750, 350);
+        jf.setSize(664, 140);
         jf.setResizable(false);
         jf.setVisible(true);
     }//GEN-LAST:event_employeeMainMenuButtonActionPerformed

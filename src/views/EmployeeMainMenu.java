@@ -40,29 +40,32 @@ public class EmployeeMainMenu extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        employeeManagementButton.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         employeeManagementButton.setText("Employee Management");
         employeeManagementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeManagementButtonActionPerformed(evt);
             }
         });
-        add(employeeManagementButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, 71));
+        add(employeeManagementButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 71));
 
+        accountButton.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         accountButton.setText("Settings");
         accountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 accountButtonActionPerformed(evt);
             }
         });
-        add(accountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 100, 170, 70));
+        add(accountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 170, 70));
 
+        logoutButton.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         logoutButton.setText("Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
             }
         });
-        add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 150, 70));
+        add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, 150, 70));
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeeManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeManagementButtonActionPerformed

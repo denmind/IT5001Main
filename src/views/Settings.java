@@ -46,8 +46,9 @@ public class Settings extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Username:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
 
         menuButton.setText("Return to Main Menu");
         menuButton.addActionListener(new java.awt.event.ActionListener() {
@@ -57,14 +58,17 @@ public class Settings extends javax.swing.JPanel {
         });
         add(menuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Current Password:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("New Password:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Re-type new Password:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
 
         usernameField.setEditable(false);
         add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 180, -1));
@@ -102,7 +106,7 @@ public class Settings extends javax.swing.JPanel {
         EmployeeMainMenu emm = new EmployeeMainMenu();
         JFrame jf = new JFrame("Employee Main Menu");
         jf.add(emm);
-        jf.setSize(750, 350);
+        jf.setSize(664, 140);
         jf.setResizable(false);
         jf.setVisible(true);
     }//GEN-LAST:event_menuButtonActionPerformed
