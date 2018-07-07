@@ -295,7 +295,7 @@ public class EditEmployee extends javax.swing.JPanel {
 
             EmployeeController empC = new EmployeeController();
 
-            if (EmployeeController.updateEmployee(emp) == 1 && rc == 0) {
+            if (empC.updateEmployee(emp) == 1 && rc == 0) {
                 int rep = JOptionPane.showConfirmDialog(null, "UPDATE SUCCESS!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (rep == 0) {
                     Component comp = SwingUtilities.getRoot(this);

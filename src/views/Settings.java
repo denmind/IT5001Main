@@ -5,11 +5,13 @@
  */
 package views;
 
+import controllers.EmployeeController;
 import java.awt.Component;
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import models.User;
 
 /**
  *
@@ -20,8 +22,17 @@ public class Settings extends javax.swing.JPanel {
     /**
      * Creates new form Setting
      */
+    User u = new User();
+
+    User userRec = EmployeeController.getRecordUser(u);
+
+    EmployeeController empC = new EmployeeController();
+
     public Settings() {
         initComponents();
+
+        usernameField.setText(userRec.getUsername());
+
     }
 
     /**
@@ -87,15 +98,38 @@ public class Settings extends javax.swing.JPanel {
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         // TODO add your handling code here:
+        String currPass = userRec.getPassword();
+        String inputCurrPass = currentPasswordField.getText();
         int rc = JOptionPane.showConfirmDialog(null, "Procced?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        if (rc == 0) {
-            int rep = JOptionPane.showConfirmDialog(null, "UPDATE SUCCESS!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            if (rep == 0) {
-                Component comp = SwingUtilities.getRoot(this);
-                ((Window) comp).dispose();
-                new EmployeeMainMenu().setVisible(true);
+        if (rc == 0 && currPass.equals(inputCurrPass)) {
+            String newPassword = newPasswordField.getText();
+            String retypeNewPassword = retypeNewPasswordField.getText();
+
+            if (newPassword.equals(null)) {
+                JOptionPane.showConfirmDialog(null, "UPDATE ERROR! Fill up form!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            } else if (newPassword.equals(retypeNewPassword)) {
+                u.setPassword(newPassword);
+                if(empC.updateUser(u)==1){
+                    int rep = JOptionPane.showConfirmDialog(null, "UPDATE SUCCESS!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    if (rep == 0) {
+                        Component comp = SwingUtilities.getRoot(this);
+                        ((Window) comp).dispose();
+                        EmployeeMainMenu emm = new EmployeeMainMenu();
+                        JFrame jf = new JFrame("Employee Main Menu");
+                        jf.add(emm);
+                        jf.setSize(664, 140);
+                        jf.setResizable(false);
+                        jf.setVisible(true);
+                    }
+                }
+                
+            } else {
+                JOptionPane.showConfirmDialog(null, "UPDATE ERROR! Retype New Password is not the same with New Password!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             }
+
+        } else {
+            JOptionPane.showConfirmDialog(null, "UPDATE ERROR! Current Password Wrong!", "Notif", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_confirmButtonActionPerformed
 

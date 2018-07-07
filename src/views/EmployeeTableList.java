@@ -25,7 +25,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
      */
     public EmployeeTableList() {
         initComponents();
-        List<Employees> empList = EmployeeController.getAllRrecords();
+        List<Employees> empList = EmployeeController.getAllRecords();
 
         DefaultTableModel model = (DefaultTableModel) employeeListTable.getModel();
         for (Employees empDetails:empList){
@@ -146,6 +146,8 @@ public class EmployeeTableList extends javax.swing.JPanel {
 
     private void employeeMainMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeMainMenuButtonActionPerformed
         // TODO add your handling code here:
+        Component comp = SwingUtilities.getRoot(this);
+        ((Window) comp).dispose();
         EmployeeMainMenu emm = new EmployeeMainMenu();
         JFrame jf = new JFrame("Employee Main Menu");
         jf.add(emm);

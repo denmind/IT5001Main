@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Employees;
+import models.User;
 
 /**
  *
@@ -46,15 +47,19 @@ public class EmployeeController {
     }
 
     public static int checkID(Employees e) {
-        int status = 0;
+        int status=0;
+        Employees emp=null;
         try {
             int id = e.updateEmployees(e.getId());
             Connection con = getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT `emp_id` FROM `employees` WHERE `emp_id`=? AND `emp_status`='ACTIVE'");
-
             ps.setInt(1, id);
-            ps.executeQuery();
-            status = 1;
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                emp=new Employees();
+                emp.setId(id);
+                status=1;
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -79,6 +84,22 @@ public class EmployeeController {
             ps.setDouble(7, e.getSalary());
             ps.setString(8, emp_status);
             ps.setInt(9, e.getId());
+            status = ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return status;
+    }
+    
+    public static int updateUser(User u){
+        int status = 0;
+        try {
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE `user` SET `password`=? WHERE `user_ID`=?");
+
+            ps.setString(1, u.getPassword());
+            ps.setInt(2, u.getId());
+           
             status = ps.executeUpdate();
         } catch (Exception ex) {
             System.out.println(ex);
@@ -131,7 +152,28 @@ public class EmployeeController {
         return emp;
     }
     
-    public static List<Employees> getAllRrecords(){
+    public static User getRecordUser(User u){
+        User userRec=null;
+        try {
+            Connection con = getConnection();
+            int id = u.getId();
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM `user`");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                userRec = new User();
+                userRec.setId(rs.getInt("user_ID"));
+                userRec.setUsername(rs.getString("username"));
+                userRec.setPassword(rs.getString("password"));
+                //u.setCountry(rs.getString("country"));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return userRec;
+    }
+    
+    public static List<Employees> getAllRecords(){
         List<Employees> empList=new ArrayList<Employees>();
         
         try{
@@ -156,6 +198,7 @@ public class EmployeeController {
         }
         return empList;
     }
+    
 
     public static Connection getConnection() {
         Connection con = null;
