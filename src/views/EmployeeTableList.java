@@ -29,7 +29,7 @@ public class EmployeeTableList extends javax.swing.JPanel {
 
         DefaultTableModel model = (DefaultTableModel) employeeListTable.getModel();
         for (Employees empDetails:empList){
-            String name = empDetails.getFirstName() + " " + empDetails.getMiddleName() + " " + empDetails.getFirstName();
+            String name = empDetails.getFirstName() + " " + empDetails.getMiddleName() + " " + empDetails.getLastName();
             model.addRow(new Object[]{empDetails.getId(), name, empDetails.getGender(), empDetails.getJob(), empDetails.getJobType(), empDetails.getSalary()});
         }
     }
